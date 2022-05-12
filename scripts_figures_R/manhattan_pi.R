@@ -131,7 +131,7 @@ pi_stream<-ggplot(data = theta_oka,
   facet_grid(cols = vars(chr_fix),
              space = "free_x",
              scales = "free_x",switch="x") +
-  labs(x = "", y="") + theme_classic() + ggtitle("Stream kokanee") + 
+  labs(x = "", y="π") + theme_classic() + ggtitle("Stream kokanee") + 
   #geom_hline(yintercept=quantile(fst_stream_shore_50$fst,0.999),linetype="dashed", color = "grey") +
   theme(
     axis.text.x = element_blank(),
@@ -159,7 +159,7 @@ pi_shore<-ggplot(data = theta_oka,
   facet_grid(cols = vars(chr_fix),
              space = "free_x",
              scales = "free_x",switch="x") +
-  labs(x = "", y="") + theme_classic() + ggtitle("Shore kokanee") + 
+  labs(x = "", y="π") + theme_classic() + ggtitle("Shore kokanee") + 
   #geom_hline(yintercept=quantile(fst_stream_shore_50$fst,0.999),linetype="dashed", color = "grey") +
   theme(
     axis.text.x = element_blank(),
@@ -187,7 +187,7 @@ pi_sockeye<-ggplot(data = theta_oka,
   facet_grid(cols = vars(chr_fix),
              space = "free_x",
              scales = "free_x",switch="x") +
-  labs(x = "", y="") + theme_classic() + ggtitle("Sockeye") + 
+  labs(y = "π", x="Chromosome") + theme_classic() + ggtitle("Sockeye") + 
   #geom_hline(yintercept=quantile(fst_stream_shore_50$fst,0.999),linetype="dashed", color = "grey") +
   theme(
     axis.text.x = element_blank(),
@@ -202,3 +202,4 @@ pi_sockeye<-ggplot(data = theta_oka,
   )
 
 pi_stream/pi_shore/pi_sockeye & theme(plot.margin = margin(1,5,0,5))# saved 9x6
+

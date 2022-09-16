@@ -1,0 +1,23 @@
+### to extract number of SVs by type
+grep -v "#" MIS29_ST_2onerka.vcf | grep "^NC_" | grep -v "STRANDBIAS" | grep "SVTYPE=INV" | wc -l ###443
+grep -v "#" MIS29_ST_2onerka.vcf | grep "^NC_" | grep -v "STRANDBIAS" | grep "SVTYPE=DEL" | wc -l ###33474
+grep -v "#" MIS29_ST_2onerka.vcf | grep "^NC_" | grep -v "STRANDBIAS" | grep "SVTYPE=INS" | wc -l ###21508
+grep -v "#" MIS29_ST_2onerka.vcf | grep "^NC_" | grep -v "STRANDBIAS" | grep "SVTYPE=DUP" | wc -l ###6751
+grep -v "#" MIS29_ST_2onerka.vcf | grep "^NC_" | grep -v "STRANDBIAS" | grep "SVTYPE=BND" | wc -l ###3979
+
+grep -v "#" OKAL4_SH_2onerka.vcf | grep "^NC_" | grep -v "STRANDBIAS" | grep "SVTYPE=INV" | wc -l ###519
+grep -v "#" OKAL4_SH_2onerka.vcf | grep "^NC_" | grep -v "STRANDBIAS" | grep "SVTYPE=DEL" | wc -l ###34090
+grep -v "#" OKAL4_SH_2onerka.vcf | grep "^NC_" | grep -v "STRANDBIAS" | grep "SVTYPE=INS" | wc -l ###17256
+grep -v "#" OKAL4_SH_2onerka.vcf | grep "^NC_" | grep -v "STRANDBIAS" | grep "SVTYPE=DUP" | wc -l ###7745
+grep -v "#" OKAL4_SH_2onerka.vcf | grep "^NC_" | grep -v "STRANDBIAS" | grep "SVTYPE=BND" | wc -l ###3990
+
+### to extract type and length
+grep -v "#" MIS29_ST_2onerka.vcf | grep -v "STRANDBIAS" | grep "^NC_" | cut -f8 | sed 's/;/\t/g' | awk '{for (i=1;i<=NF;i++){if ($i ~/^SVTYPE/) {print $i}}}' | sed 's/SVTYPE=//g' > MIS29_ST_2onerka.svtype
+grep -v "#" MIS29_ST_2onerka.vcf | grep -v "STRANDBIAS" | grep "^NC_" | cut -f8 | sed 's/;/\t/g' | awk '{for (i=1;i<=NF;i++){if ($i ~/^SVLEN/) {print $i}}}' | sed 's/SVLEN=//g' > MIS29_ST_2onerka.len
+grep -v "#" MIS29_ST_2onerka.vcf | grep -v "STRANDBIAS" | grep "^NC_" | cut -f 1,2,3,7 > MIS29_ST_2onerka.info
+paste MIS29_ST_2onerka.info MIS29_ST_2onerka.svtype MIS29_ST_2onerka.len > MIS29_ST_2onerka.tab 
+
+grep -v "#" OKAL4_SH_2onerka.vcf | grep -v "STRANDBIAS" | grep "^NC_" | cut -f8 | sed 's/;/\t/g' | awk '{for (i=1;i<=NF;i++){if ($i ~/^SVTYPE/) {print $i}}}' | sed 's/SVTYPE=//g' > OKAL4_SH_2onerka.svtype
+grep -v "#" OKAL4_SH_2onerka.vcf | grep -v "STRANDBIAS" | grep "^NC_" | cut -f8 | sed 's/;/\t/g' | awk '{for (i=1;i<=NF;i++){if ($i ~/^SVLEN/) {print $i}}}' | sed 's/SVLEN=//g' > OKAL4_SH_2onerka.len
+grep -v "#" OKAL4_SH_2onerka.vcf | grep -v "STRANDBIAS" | grep "^NC_" | cut -f 1,2,3,7 > OKAL4_SH_2onerka.info
+paste OKAL4_SH_2onerka.info OKAL4_SH_2onerka.svtype OKAL4_SH_2onerka.len > OKAL4_SH_2onerka.tab 

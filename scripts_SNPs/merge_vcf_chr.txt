@@ -1,0 +1,7 @@
+### Merge vcf files
+bcftools concat kokanee_batch1_NC_0425*filtered.vcf -Ov -o kokanee_batch1_filtered.vcf.tmp
+grep -v "^##contig=<ID=NW_" kokanee_batch1_filtered.vcf.tmp > kokanee_batch1_filtered.vcf
+####
+# Keep only Okanagan samples and sites that are variable in these samples
+####
+vcftools --vcf kokanee_batch1_filtered.vcf --keep $ANNA/sample_lists/kokanee_bams_okanagan.txt --non-ref-ac-any 1 --recode --recode-INFO-all --stdout > kokanee_batch1_okanagan_filtered.vcf 

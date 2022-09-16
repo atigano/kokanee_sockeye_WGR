@@ -1,0 +1,18 @@
+tail -n +2 angsd_kok_batch1_okanagan_all.mafs > angsd_kok_batch1_okanagan_all_nohead.txt
+cut -f2 angsd_kok_batch1_okanagan_all_nohead.txt | awk '{$1 = $1 + 1; print}' | paste angsd_kok_batch1_okanagan_all_nohead.txt - | sed 's/ //g'> angsd_kok_batch1_okanagan_all.bed
+
+awk '{print $1 "\t" $2 "\t" $8}' angsd_kok_batch1_okanagan_all.bed > angsd_kok_batch1_okanagan_all_order.bed
+
+bedtools map -a onerka_windows_50k.bed -b dxy_shore_stream_siteInterval.bed -c 4 -o sum > dxy_shore_stream_50kwin.txt
+bedtools map -a onerka_windows_50k.bed -b dxy_shore_sockeye_siteInterval.bed -c 4 -o sum > dxy_shore_sockeye_50kwin.txt
+bedtools map -a onerka_windows_50k.bed -b dxy_stream_sockeye_siteInterval.bed -c 4 -o sum > dxy_stream_sockeye_50kwin.txt
+
+## only chromosomes
+grep "NC_" dxy_shore_stream_50kwin.txt > dxy_shore_stream_50kwin_chr.txt
+grep "NC_" dxy_shore_sockeye_50kwin.txt > dxy_shore_sockeye_50kwin_chr.txt
+grep "NC_" dxy_stream_sockeye_50kwin.txt > dxy_stream_sockeye_50kwin_chr.txt
+
+###correct by total number of variant and invariant sites genotyped
+paste dxy_shore_stream_50kwin_chr.txt allsites_50kbwin_genome.txt | awk -v OFS='\t' '{print $1, $2,$3,$4,$8}' | awk -v OFS='\t' '{$9 = $4 / $5}1' | tr -s '\t'> dxy_shore_stream_50kwin_corrected.txt
+paste dxy_shore_sockeye_50kwin_chr.txt allsites_50kbwin_genome.txt | awk -v OFS='\t' '{print $1, $2,$3,$4,$8}' | awk -v OFS='\t' '{$9 = $4 / $5}1' | tr -s '\t'> dxy_shore_sockeye_50kwin_corrected.txt
+paste dxy_stream_sockeye_50kwin_chr.txt allsites_50kbwin_genome.txt | awk -v OFS='\t' '{print $1, $2,$3,$4,$8}' | awk -v OFS='\t' '{$9 = $4 / $5}1' | tr -s '\t'> dxy_stream_sockeye_50kwin_corrected.txt

@@ -1,0 +1,262 @@
+###PCA with each SV type
+###INVERSIONS
+library(dplyr)
+library(magrittr)
+library(tibble)
+library(ggplot2)
+library(reshape2)
+setwd("~/Dropbox/postdoc UBC/analyses_kokanee")
+
+popmap_delly<-read.table("sample_kok_okanagan_info_alphaorder_delly.txt", header= TRUE)
+
+#load geno data
+geno_sv_oka_inv <- read.table("delly_okanagan_sv_filtered_inv.012")[,-1] #load genotype matrix
+geno_sv_oka_inv.pos <- read.table("delly_okanagan_sv_filtered.012.pos") %>% #load SNPs info
+  mutate(., locus=paste(V1,V2,sep='_')) #create a new column for SNP info name (CHR + position)
+geno_sv_oka_inv.indv <- read.table("delly_okanagan_sv_filtered.012.indv") #load individuals info
+
+#Set rownames and colnames to the geno matrix
+dimnames(geno_sv_oka_inv) <- list(geno_sv_oka_inv.indv$V1, geno_sv_oka_inv.pos$locus)
+#check the geno matrix
+geno_sv_oka_inv[1:12,1:9]
+#impute missing data
+geno_sv_oka_inv[geno_sv_oka_inv == -1] <- NA
+geno_sv_oka_inv.imp <- apply(geno_sv_oka_inv,2,function(x){
+  replace(x, is.na(x), as.numeric(names(which.max(table(x))))) })
+##run and visualized PCA
+pca.geno_sv_oka_inv <- prcomp(geno_sv_oka_inv.imp)
+screeplot(pca.geno_sv_oka_inv)
+
+#get stats info from the pca
+sum.pca <- summary(pca.geno_sv_oka_inv)
+#print stats info
+sum.pca$importance[,1:5]
+
+#prepare dataset to plot PCAs
+pca.geno_sv_oka_inv.sub <- pca.geno_sv_oka_inv$x[,1:4] %>% #retain the first four PCs
+  as.data.frame(.) %>% #transform to dataframe object
+  tibble::rownames_to_column(., var='Sample') %>% #set rownames to a new column for samples ids
+  dplyr::left_join(., popmap_delly, by='Sample')
+pca.geno_sv_oka_inv.sub2<-cbind(pca.geno_sv_oka_inv.sub[1:5], popmap_delly[2:4])
+
+
+###INSERTIONS
+setwd("~/Dropbox/postdoc UBC/analyses_kokanee")
+
+popmap_delly<-read.table("sample_kok_okanagan_info_alphaorder_delly.txt", header= TRUE)
+
+#load geno data 
+geno_sv_oka_ins <- read.table("delly_okanagan_sv_filtered_ins.012")[,-1] #load genotype matrix
+geno_sv_oka_ins.pos <- read.table("delly_okanagan_sv_filtered.012.pos") %>% #load SNPs info
+  mutate(., locus=paste(V1,V2,sep='_')) #create a new column for SNP info name (CHR + position)
+geno_sv_oka_ins.indv <- read.table("delly_okanagan_sv_filtered.012.indv") #load individuals info
+
+#Set rownames and colnames to the geno matrix
+dimnames(geno_sv_oka_ins) <- list(geno_sv_oka_ins.indv$V1, geno_sv_oka_ins.pos$locus)
+#check the geno matrix
+geno_sv_oka_ins[1:12,1:9]
+#impute missing data
+geno_sv_oka_ins[geno_sv_oka_ins == -1] <- NA
+geno_sv_oka_ins.imp <- apply(geno_sv_oka_ins,2,function(x){
+  replace(x, is.na(x), as.numeric(names(which.max(table(x))))) })
+##run and visualized PCA
+pca.geno_sv_oka_ins <- prcomp(geno_sv_oka_ins.imp)
+screeplot(pca.geno_sv_oka_ins)
+
+#get stats info from the pca
+sum.pca <- summary(pca.geno_sv_oka_ins)
+#print stats info
+sum.pca$importance[,1:5]
+
+#prepare dataset to plot PCAs
+pca.geno_sv_oka_ins.sub <- pca.geno_sv_oka_ins$x[,1:4] %>% #retain the first four PCs
+  as.data.frame(.) %>% #transform to dataframe object
+  tibble::rownames_to_column(., var='Sample') %>% #set rownames to a new column for samples ids
+  dplyr::left_join(., popmap_delly, by='Sample')
+pca.geno_sv_oka_ins.sub2<-cbind(pca.geno_sv_oka_ins.sub[1:5], popmap_delly[2:4])
+
+
+###DELETIONS
+setwd("~/Dropbox/postdoc UBC/analyses_kokanee")
+
+popmap_delly<-read.table("sample_kok_okanagan_info_alphaorder_delly.txt", header= TRUE)
+
+#load geno data 
+geno_sv_oka_del <- read.table("delly_okanagan_sv_filtered_del.012")[,-1] #load genotype matrix
+geno_sv_oka_del.pos <- read.table("delly_okanagan_sv_filtered.012.pos") %>% #load SNPs info
+  mutate(., locus=paste(V1,V2,sep='_')) #create a new column for SNP info name (CHR + position)
+geno_sv_oka_del.indv <- read.table("delly_okanagan_sv_filtered.012.indv") #load individuals info
+
+#Set rownames and colnames to the geno matrix
+dimnames(geno_sv_oka_del) <- list(geno_sv_oka_del.indv$V1, geno_sv_oka_del.pos$locus)
+#check the geno matrix
+geno_sv_oka_del[1:12,1:9]
+#impute missing data
+geno_sv_oka_del[geno_sv_oka_del == -1] <- NA
+geno_sv_oka_del.imp <- apply(geno_sv_oka_del,2,function(x){
+  replace(x, is.na(x), as.numeric(names(which.max(table(x))))) })
+##run and visualized PCA
+pca.geno_sv_oka_del <- prcomp(geno_sv_oka_del.imp)
+screeplot(pca.geno_sv_oka_del)
+
+#get stats info from the pca
+sum.pca <- summary(pca.geno_sv_oka_del)
+#print stats info
+sum.pca$importance[,1:5]
+
+#prepare dataset to plot PCAs
+pca.geno_sv_oka_del.sub <- pca.geno_sv_oka_del$x[,1:4] %>% #retain the first four PCs
+  as.data.frame(.) %>% #transform to dataframe object
+  tibble::rownames_to_column(., var='Sample') %>% #set rownames to a new column for samples ids
+  dplyr::left_join(., popmap_delly, by='Sample')
+pca.geno_sv_oka_del.sub2<-cbind(pca.geno_sv_oka_del.sub[1:5], popmap_delly[2:4])
+
+
+
+###DUPLICATIONS
+setwd("~/Dropbox/postdoc UBC/analyses_kokanee")
+
+popmap_delly<-read.table("sample_kok_okanagan_info_alphaorder_duply.txt", header= TRUE)
+
+#load geno data
+geno_sv_oka_dup <- read.table("delly_okanagan_sv_filtered_dup.012")[,-1] #load genotype matrix
+geno_sv_oka_dup.pos <- read.table("delly_okanagan_sv_filtered.012.pos") %>% #load SNPs info
+  mutate(., locus=paste(V1,V2,sep='_')) #create a new column for SNP info name (CHR + position)
+geno_sv_oka_dup.indv <- read.table("delly_okanagan_sv_filtered.012.indv") #load individuals info
+
+#Set rownames and colnames to the geno matrix
+dimnames(geno_sv_oka_dup) <- list(geno_sv_oka_dup.indv$V1, geno_sv_oka_dup.pos$locus)
+#check the geno matrix
+geno_sv_oka_dup[1:12,1:9]
+#impute missing data
+geno_sv_oka_dup[geno_sv_oka_dup == -1] <- NA
+geno_sv_oka_dup.imp <- apply(geno_sv_oka_dup,2,function(x){
+  replace(x, is.na(x), as.numeric(names(which.max(table(x))))) })
+##run and visualized PCA
+pca.geno_sv_oka_dup <- prcomp(geno_sv_oka_dup.imp)
+screeplot(pca.geno_sv_oka_dup)
+
+#get stats info from the pca
+sum.pca <- summary(pca.geno_sv_oka_dup)
+#print stats info
+sum.pca$importance[,1:5]
+
+#prepare dataset to plot PCAs
+pca.geno_sv_oka_dup.sub <- pca.geno_sv_oka_dup$x[,1:4] %>% #retain the first four PCs
+  as.data.frame(.) %>% #transform to dataframe object
+  tibble::rownames_to_column(., var='Sample') %>% #set rownames to a new column for samples ids
+  dplyr::left_join(., popmap_delly, by='Sample')
+pca.geno_sv_oka_dup.sub2<-cbind(pca.geno_sv_oka_dup.sub[1:5], popmap_delly[2:4])
+
+
+
+####ALL PCAs (sequence and structure by type)
+
+###plot with right colours
+pca.geno_sv_oka.sub2$Population[pca.geno_sv_oka.sub2$Ecotype == "Stream"] <- "Stream kokanee"
+pca.geno_sv_oka.sub2$Population[pca.geno_sv_oka.sub2$Ecotype == "Shore"] <- "Shore kokanee"
+pca.geno_sv_oka.sub2$Population[pca.geno_sv_oka.sub2$Ecotype == "Migratory"] <- "Sockeye"
+
+delly_all<-ggplot(pca.geno_sv_oka.sub2) + aes(x=PC1, y=PC2, col=Population, shape=Population, fill=Population) +
+  ggtitle("All SVs") +
+  #geom_hline(yintercept = 0, lty=2, col='grey50') + #add horiz line at y=0
+  #geom_vline(xintercept = 0, lty=2,col='grey50') +  #add vertical line at x=0
+  geom_point(size=2, alpha=0.5) + xlab("PC1 -14.19%") + ylab("PC2 - 3.12%") +
+  scale_color_manual(values = c("Stream kokanee" = "#fecb02","Shore kokanee" ="#e80000","Sockeye"="#1a759f")) +
+  scale_fill_manual(values = c("Stream kokanee" = "#fecb02","Shore kokanee" ="#e80000","Sockeye"="#1a759f")) +
+  scale_shape_manual(values = c("Stream kokanee" = 21,"Shore kokanee" = 22,"Sockeye"= 24)) +
+  #scale_color_manual(values=c('orange','purple','royalblue', 'cyan')) + #define a new color scale
+  theme_bw() +
+  theme(legend.text=element_text(size=rel(1)), 
+        plot.title = element_text(hjust = 0.5))
+
+pca.geno_sv_oka_inv.sub2$Population[pca.geno_sv_oka_inv.sub2$Ecotype == "Stream"] <- "Stream kokanee"
+pca.geno_sv_oka_inv.sub2$Population[pca.geno_sv_oka_inv.sub2$Ecotype == "Shore"] <- "Shore kokanee"
+pca.geno_sv_oka_inv.sub2$Population[pca.geno_sv_oka_inv.sub2$Ecotype == "Migratory"] <- "Sockeye"
+
+delly_inv<-ggplot(pca.geno_sv_oka_inv.sub2) + aes(x=PC1, y=PC2, col=Population, shape=Population, fill=Population) +
+  ggtitle("Inversions") +
+  #geom_hline(yintercept = 0, lty=2, col='grey50') + #add horiz line at y=0
+  #geom_vline(xintercept = 0, lty=2,col='grey50') +  #add vertical line at x=0
+  geom_point(size=2, alpha=0.5) + xlab("PC1 - 10.56%") + ylab("PC2 - 4.45%") +
+  scale_color_manual(values = c("Stream kokanee" = "#fecb02","Shore kokanee" ="#e80000","Sockeye"="#1a759f")) +
+  scale_fill_manual(values = c("Stream kokanee" = "#fecb02","Shore kokanee" ="#e80000","Sockeye"="#1a759f")) +
+  scale_shape_manual(values = c("Stream kokanee" = 21,"Shore kokanee" = 22,"Sockeye"= 24)) +
+  #add the samples
+  #coord_fixed() +
+  #scale_color_manual(values=c('orange','purple','royalblue', 'cyan')) + #define a new color scale
+  theme_bw() +
+  theme(legend.text=element_text(size=rel(1)), 
+        plot.title = element_text(hjust = 0.5))
+
+pca.geno_sv_oka_ins.sub2$Population[pca.geno_sv_oka_ins.sub2$Ecotype == "Stream"] <- "Stream kokanee"
+pca.geno_sv_oka_ins.sub2$Population[pca.geno_sv_oka_ins.sub2$Ecotype == "Shore"] <- "Shore kokanee"
+pca.geno_sv_oka_ins.sub2$Population[pca.geno_sv_oka_ins.sub2$Ecotype == "Migratory"] <- "Sockeye"
+
+delly_ins<-ggplot(pca.geno_sv_oka_ins.sub2) + aes(x=PC1, y=PC2, col=Population, shape=Population, fill=Population) +
+  ggtitle("Insertions") +
+  geom_point(size=2, alpha=0.5) + xlab("PC1 - 14.87%") + ylab("PC2 - 3.18%") +
+  scale_color_manual(values = c("Stream kokanee" = "#fecb02","Shore kokanee" ="#e80000","Sockeye"="#1a759f")) +
+  scale_fill_manual(values = c("Stream kokanee" = "#fecb02","Shore kokanee" ="#e80000","Sockeye"="#1a759f")) +
+  scale_shape_manual(values = c("Stream kokanee" = 21,"Shore kokanee" = 22,"Sockeye"= 24)) +
+  #add the samples
+  #coord_fixed() +
+  #scale_color_manual(values=c('orange','purple','royalblue', 'cyan')) + #define a new color scale
+  theme_bw() +
+  theme(legend.text=element_text(size=rel(1)), 
+        plot.title = element_text(hjust = 0.5))
+
+pca.geno_sv_oka_del.sub2$Population[pca.geno_sv_oka_del.sub2$Ecotype == "Stream"] <- "Stream kokanee"
+pca.geno_sv_oka_del.sub2$Population[pca.geno_sv_oka_del.sub2$Ecotype == "Shore"] <- "Shore kokanee"
+pca.geno_sv_oka_del.sub2$Population[pca.geno_sv_oka_del.sub2$Ecotype == "Migratory"] <- "Sockeye"
+
+delly_del<-ggplot(pca.geno_sv_oka_del.sub2) + aes(x=PC1, y=PC2, col=Population, shape=Population, fill=Population) +
+  ggtitle("Deletions") +
+  geom_point(size=2, alpha=0.5) + xlab("PC1 - 14.42%") + ylab("PC2 - 3.14%") +
+  scale_color_manual(values = c("Stream kokanee" = "#fecb02","Shore kokanee" ="#e80000","Sockeye"="#1a759f")) +
+  scale_fill_manual(values = c("Stream kokanee" = "#fecb02","Shore kokanee" ="#e80000","Sockeye"="#1a759f")) +
+  scale_shape_manual(values = c("Stream kokanee" = 21,"Shore kokanee" = 22,"Sockeye"= 24)) +
+  #add the samples
+  #coord_fixed() +
+  #scale_color_manual(values=c('orange','purple','royalblue', 'cyan')) + #define a new color scale
+  theme_bw() +
+  theme(legend.text=element_text(size=rel(1)), 
+        plot.title = element_text(hjust = 0.5))
+
+pca.geno_sv_oka_dup.sub2$Population[pca.geno_sv_oka_dup.sub2$Ecotype == "Stream"] <- "Stream kokanee"
+pca.geno_sv_oka_dup.sub2$Population[pca.geno_sv_oka_dup.sub2$Ecotype == "Shore"] <- "Shore kokanee"
+pca.geno_sv_oka_dup.sub2$Population[pca.geno_sv_oka_dup.sub2$Ecotype == "Migratory"] <- "Sockeye"
+
+delly_dup<-ggplot(pca.geno_sv_oka_dup.sub2) + aes(x=PC1, y=PC2, col=Population, shape=Population, fill=Population) +
+  ggtitle("Duplications") +
+  geom_point(size=2, alpha=0.5) + xlab("PC1 - 9.02%") + ylab("PC2 - 3.61%") +
+  scale_color_manual(values = c("Stream kokanee" = "#fecb02","Shore kokanee" ="#e80000","Sockeye"="#1a759f")) +
+  scale_fill_manual(values = c("Stream kokanee" = "#fecb02","Shore kokanee" ="#e80000","Sockeye"="#1a759f")) +
+  scale_shape_manual(values = c("Stream kokanee" = 21,"Shore kokanee" = 22,"Sockeye"= 24)) +
+  #add the samples
+  #coord_fixed() +
+  #scale_color_manual(values=c('orange','purple','royalblue', 'cyan')) + #define a new color scale
+  theme_bw() +
+  theme(legend.text=element_text(size=rel(1)), 
+        plot.title = element_text(hjust = 0.5))
+
+
+df_fix$Population[df_fix$Ecotype == "Stream"] <- "Stream kokanee"
+df_fix$Population[df_fix$Ecotype == "Shore"] <- "Shore kokanee"
+df_fix$Population[df_fix$Ecotype == "Migratory"] <- "Sockeye"
+
+pca_angsd<-ggplot(df_fix) + aes(x=pc1, y=pc2, col=Population, shape=Population, fill=Population) +
+  ggtitle("All SNPs") +
+  geom_point(size=2, alpha=0.5) + xlab("PC1 - 10.38%") + ylab("PC2 - 2.93%") +
+  scale_color_manual(values = c("Stream kokanee" = "#fecb02","Shore kokanee" ="#e80000","Sockeye"="#1a759f")) +
+  scale_fill_manual(values = c("Stream kokanee" = "#fecb02","Shore kokanee" ="#e80000","Sockeye"="#1a759f")) +
+  scale_shape_manual(values = c("Stream kokanee" = 21,"Shore kokanee" = 22,"Sockeye"= 24)) +
+  #add the samples
+  #coord_fixed() +
+  #scale_color_manual(values=c('orange','purple','royalblue', 'cyan')) + #define a new color scale
+  theme_bw() +
+  theme(legend.text=element_text(size=rel(1)), 
+        plot.title = element_text(hjust = 0.5))
+
+ggarrange(pca_angsd,delly_all,delly_ins,delly_del,delly_inv,delly_dup, ncol=2, nrow=3, common.legend = TRUE, legend="bottom") #saved 6x8
+

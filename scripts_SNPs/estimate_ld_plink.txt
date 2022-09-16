@@ -1,0 +1,155 @@
+### CHR12
+###Only sockeye - 232 variants - 219 variable sites
+
+#module load StdEnv/2020 plink/1.9b_6.21-x86_64
+#module load vcftools
+
+cd $ANNA/variant_calling/batch1/bcftools/
+
+#extract variants for a given area of interest 
+vcftools --vcf kokanee_batch1_okanagan_filtered_sorted.vcf --non-ref-ac 1 --keep samples_vcf_sockeye_okanagan.txt --recode --recode-INFO-all --chr NC_042546.1 --from-bp 41110000 --to-bp 41410000 --stdout > kokanee_batch1_okanagan_filtered_sorted_chr12_aod_sockeye.vcf
+
+plink --vcf kokanee_batch1_okanagan_filtered_sorted_chr12_aod_sockeye.vcf --make-bed --const-fid --allow-extra-chr --out kokanee_batch1_okanagan_filtered_sorted_chr12_aod_sockeye
+
+plink --bed kokanee_batch1_okanagan_filtered_sorted_chr12_aod_sockeye.bed \
+--bim kokanee_batch1_okanagan_filtered_sorted_chr12_aod_sockeye.bim \
+--fam kokanee_batch1_okanagan_filtered_sorted_chr12_aod_sockeye.fam \
+--r2 inter-chr --allow-extra-chr --ld-window-r2 0 \
+--out kokanee_batch1_okanagan_filtered_sorted_chr12_aod_sockeye
+
+###Only shore - 621 variants - 319 variable sites
+
+#module load StdEnv/2020 plink/1.9b_6.21-x86_64
+#module load vcftools
+
+cd $ANNA/variant_calling/batch1/bcftools/
+
+#extract variants for a given area of interest 
+vcftools --vcf kokanee_batch1_okanagan_filtered_sorted.vcf --non-ref-ac 1 --keep samples_vcf_shore_okanagan.txt --recode --recode-INFO-all --chr NC_042546.1 --from-bp 41110000 --to-bp 41410000 --stdout > kokanee_batch1_okanagan_filtered_sorted_chr12_aod_shore.vcf
+
+plink --vcf kokanee_batch1_okanagan_filtered_sorted_chr12_aod_shore.vcf --make-bed --const-fid --allow-extra-chr --out kokanee_batch1_okanagan_filtered_sorted_chr12_aod_shore
+
+plink --bed kokanee_batch1_okanagan_filtered_sorted_chr12_aod_shore.bed \
+--bim kokanee_batch1_okanagan_filtered_sorted_chr12_aod_shore.bim \
+--fam kokanee_batch1_okanagan_filtered_sorted_chr12_aod_shore.fam \
+--r2 inter-chr --allow-extra-chr --ld-window-r2 0 \
+--out kokanee_batch1_okanagan_filtered_sorted_chr12_aod_shore
+
+###Only stream - 649 variants - 632 variable sites
+
+#module load StdEnv/2020 plink/1.9b_6.21-x86_64
+#module load vcftools
+
+cd $ANNA/variant_calling/batch1/bcftools/
+
+#extract variants for a given area of interest 
+vcftools --vcf kokanee_batch1_okanagan_filtered_sorted.vcf --non-ref-ac 1 --keep samples_vcf_stream_okanagan.txt --recode --recode-INFO-all --chr NC_042546.1 --from-bp 41110000 --to-bp 41410000 --stdout > kokanee_batch1_okanagan_filtered_sorted_chr12_aod_stream.vcf
+
+plink --vcf kokanee_batch1_okanagan_filtered_sorted_chr12_aod_stream.vcf --make-bed --const-fid --allow-extra-chr --out kokanee_batch1_okanagan_filtered_sorted_chr12_aod_stream
+
+plink --bed kokanee_batch1_okanagan_filtered_sorted_chr12_aod_stream.bed \
+--bim kokanee_batch1_okanagan_filtered_sorted_chr12_aod_stream.bim \
+--fam kokanee_batch1_okanagan_filtered_sorted_chr12_aod_stream.fam \
+--r2 inter-chr --allow-extra-chr --ld-window-r2 0 \
+--out kokanee_batch1_okanagan_filtered_sorted_chr12_aod_stream
+
+### CHR20
+###Only sockeye -
+
+#module load StdEnv/2020 plink/1.9b_6.21-x86_64
+#module load vcftools
+
+cd $ANNA/variant_calling/batch1/bcftools/
+
+#extract variants for a given area of interest 
+vcftools --vcf kokanee_batch1_okanagan_filtered_sorted.vcf --non-ref-ac 1 --keep samples_vcf_sockeye_okanagan.txt --recode --recode-INFO-all --chr NC_042554.1 --from-bp 45350000 --to-bp 45600000 --stdout > kokanee_batch1_okanagan_filtered_sorted_chr20_aod_sockeye.vcf
+
+plink --vcf kokanee_batch1_okanagan_filtered_sorted_chr20_aod_sockeye.vcf --make-bed --const-fid --allow-extra-chr --out kokanee_batch1_okanagan_filtered_sorted_chr20_aod_sockeye
+
+plink --bed kokanee_batch1_okanagan_filtered_sorted_chr20_aod_sockeye.bed \
+--bim kokanee_batch1_okanagan_filtered_sorted_chr20_aod_sockeye.bim \
+--fam kokanee_batch1_okanagan_filtered_sorted_chr20_aod_sockeye.fam \
+--r2 inter-chr --allow-extra-chr --ld-window-r2 0 \
+--out kokanee_batch1_okanagan_filtered_sorted_chr20_aod_sockeye
+
+###Only shore 
+
+#module load StdEnv/2020 plink/1.9b_6.21-x86_64
+#module load vcftools
+
+cd $ANNA/variant_calling/batch1/bcftools/
+
+#extract variants for a given area of interest 
+vcftools --vcf kokanee_batch1_okanagan_filtered_sorted.vcf --non-ref-ac 1 --keep samples_vcf_shore_okanagan.txt --recode --recode-INFO-all --chr NC_042554.1 --from-bp 45350000 --to-bp 45600000 --stdout > kokanee_batch1_okanagan_filtered_sorted_chr20_aod_shore.vcf
+
+plink --vcf kokanee_batch1_okanagan_filtered_sorted_chr20_aod_shore.vcf --make-bed --const-fid --allow-extra-chr --out kokanee_batch1_okanagan_filtered_sorted_chr20_aod_shore
+
+plink --bed kokanee_batch1_okanagan_filtered_sorted_chr20_aod_shore.bed \
+--bim kokanee_batch1_okanagan_filtered_sorted_chr20_aod_shore.bim \
+--fam kokanee_batch1_okanagan_filtered_sorted_chr20_aod_shore.fam \
+--r2 inter-chr --allow-extra-chr --ld-window-r2 0 \
+--out kokanee_batch1_okanagan_filtered_sorted_chr20_aod_shore
+
+###Only stream 
+
+#module load StdEnv/2020 plink/1.9b_6.21-x86_64
+#module load vcftools
+
+cd $ANNA/variant_calling/batch1/bcftools/
+
+#extract variants for a given area of interest 
+vcftools --vcf kokanee_batch1_okanagan_filtered_sorted.vcf --non-ref-ac 1 --keep samples_vcf_stream_okanagan.txt --recode --recode-INFO-all --chr NC_042554.1 --from-bp 45350000 --to-bp 45600000 --stdout > kokanee_batch1_okanagan_filtered_sorted_chr20_aod_stream.vcf
+
+plink --vcf kokanee_batch1_okanagan_filtered_sorted_chr20_aod_stream.vcf --make-bed --const-fid --allow-extra-chr --out kokanee_batch1_okanagan_filtered_sorted_chr20_aod_stream
+
+plink --bed kokanee_batch1_okanagan_filtered_sorted_chr20_aod_stream.bed \
+--bim kokanee_batch1_okanagan_filtered_sorted_chr20_aod_stream.bim \
+--fam kokanee_batch1_okanagan_filtered_sorted_chr20_aod_stream.fam \
+--r2 inter-chr --allow-extra-chr --ld-window-r2 0 \
+--out kokanee_batch1_okanagan_filtered_sorted_chr20_aod_stream
+
+###CHR7
+###Only stream 
+
+module load StdEnv/2020 plink/1.9b_6.21-x86_64
+module load vcftools
+
+cd $ANNA/variant_calling/batch1/bcftools/
+
+#extract variants for a given area of interest 
+vcftools --vcf kokanee_batch1_okanagan_filtered_sorted.vcf --non-ref-ac 1 --keep samples_vcf_stream_okanagan.txt --recode --recode-INFO-all --chr NC_042541.1 --from-bp 13160000 --to-bp 13370000 --stdout > kokanee_batch1_okanagan_filtered_sorted_chr7_aod_stream.vcf
+
+plink --vcf kokanee_batch1_okanagan_filtered_sorted_chr7_aod_stream.vcf --make-bed --const-fid --allow-extra-chr --out kokanee_batch1_okanagan_filtered_sorted_chr7_aod_stream
+
+plink --bed kokanee_batch1_okanagan_filtered_sorted_chr7_aod_stream.bed \
+--bim kokanee_batch1_okanagan_filtered_sorted_chr7_aod_stream.bim \
+--fam kokanee_batch1_okanagan_filtered_sorted_chr7_aod_stream.fam \
+--r2 inter-chr --allow-extra-chr --ld-window-r2 0 \
+--out kokanee_batch1_okanagan_filtered_sorted_chr7_aod_stream
+
+
+#shore
+#extract variants for a given area of interest 
+vcftools --vcf kokanee_batch1_okanagan_filtered_sorted.vcf --non-ref-ac 1 --keep samples_vcf_shore_okanagan.txt --recode --recode-INFO-all --chr NC_042541.1 --from-bp 13160000 --to-bp 13370000 --stdout > kokanee_batch1_okanagan_filtered_sorted_chr7_aod_shore.vcf
+
+plink --vcf kokanee_batch1_okanagan_filtered_sorted_chr7_aod_shore.vcf --make-bed --const-fid --allow-extra-chr --out kokanee_batch1_okanagan_filtered_sorted_chr7_aod_shore
+
+plink --bed kokanee_batch1_okanagan_filtered_sorted_chr7_aod_shore.bed \
+--bim kokanee_batch1_okanagan_filtered_sorted_chr7_aod_shore.bim \
+--fam kokanee_batch1_okanagan_filtered_sorted_chr7_aod_shore.fam \
+--r2 inter-chr --allow-extra-chr --ld-window-r2 0 \
+--out kokanee_batch1_okanagan_filtered_sorted_chr7_aod_shore
+
+#sockeye
+#extract variants for a given area of interest 
+vcftools --vcf kokanee_batch1_okanagan_filtered_sorted.vcf --non-ref-ac 1 --keep samples_vcf_sockeye_okanagan.txt --recode --recode-INFO-all --chr NC_042541.1 --from-bp 13160000 --to-bp 13370000 --stdout > kokanee_batch1_okanagan_filtered_sorted_chr7_aod_sockeye.vcf
+
+plink --vcf kokanee_batch1_okanagan_filtered_sorted_chr7_aod_sockeye.vcf --make-bed --const-fid --allow-extra-chr --out kokanee_batch1_okanagan_filtered_sorted_chr7_aod_sockeye
+
+plink --bed kokanee_batch1_okanagan_filtered_sorted_chr7_aod_sockeye.bed \
+--bim kokanee_batch1_okanagan_filtered_sorted_chr7_aod_sockeye.bim \
+--fam kokanee_batch1_okanagan_filtered_sorted_chr7_aod_sockeye.fam \
+--r2 inter-chr --allow-extra-chr --ld-window-r2 0 \
+--out kokanee_batch1_okanagan_filtered_sorted_chr7_aod_sockeye
+
+

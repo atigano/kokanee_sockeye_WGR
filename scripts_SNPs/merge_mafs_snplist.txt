@@ -1,0 +1,10 @@
+#Merge mafs files
+echo -e 'chromo\tposition\tmajor\tminor\tanc\tknownEM\tpK-EM\tnInd' >> angsd_kok_batch1_okanagan.mafs
+for FILE in `ls *okanagan*mafs.gz`; do
+gunzip -c $FILE | tail -n +2 >> angsd_kok_batch1_okanagan.mafs
+
+#create SNP list 
+#First make SNP list with major
+module load angsd
+cut -f 1,2,3,4 angsd_kok_batch1_okanagan.mafs | tail -n +2 > angsd_kok_batch1_okanagan_snplist.txt
+angsd sites index angsd_kok_batch1_okanagan_snplist.txt

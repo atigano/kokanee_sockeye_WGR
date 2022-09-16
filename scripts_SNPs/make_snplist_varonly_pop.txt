@@ -1,0 +1,7 @@
+###rerun with only variant sites for each population
+tail +2 angsd_kok_batch1_okanagan_shore.mafs | awk '$6 > 0.01' | awk '$6 < 0.99' | cut -f 1,2,3,4 > okanagan_shore_snplist.txt
+tail +2 angsd_kok_batch1_okanagan_sockeye.mafs | awk '$6 > 0.01' | awk '$6 < 0.99' | cut -f 1,2,3,4 > okanagan_sockeye_snplist.txt
+tail +2 angsd_kok_batch1_okanagan_stream.mafs | awk '$6 > 0.01' | awk '$6 < 0.99' | cut -f 1,2,3,4 > okanagan_stream_snplist.txt
+angsd sites index okanagan_shore_snplist.txt
+angsd sites index okanagan_stream_snplist.txt
+angsd sites index okanagan_sockeye_snplist.txt

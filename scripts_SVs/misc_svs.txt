@@ -25,3 +25,8 @@ vcftools --vcf delly_okanagan_sv_filtered.vcf --keep samples_sockeye_okanagan.tx
 cut -f 5 sockeye_af_sv.frq | sed 's/:/\t/g' | cut -f2 | less > sockeye_major_af
 cut -f 5 shore_af_sv.frq | sed 's/:/\t/g' | cut -f2 | less > shore_major_af
 cut -f 5 stream_af_sv.frq | sed 's/:/\t/g' | cut -f2 | less > stream_major_af
+
+#### fst on SVs
+vcftools --vcf delly_okanagan_sv_filtered.vcf --weir-fst-pop samples_shore_okanagan.txt --weir-fst-pop samples_stream_okanagan.txt --out stream_shore_sv
+vcftools --vcf delly_okanagan_sv_filtered.vcf --weir-fst-pop samples_shore_okanagan.txt --weir-fst-pop samples_sockeye_okanagan.txt --out shore_sockeye_sv
+vcftools --vcf delly_okanagan_sv_filtered.vcf --weir-fst-pop samples_sockeye_okanagan.txt --weir-fst-pop samples_stream_okanagan.txt --out stream_sockeye_sv

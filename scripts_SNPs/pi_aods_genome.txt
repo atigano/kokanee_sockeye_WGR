@@ -1,0 +1,45 @@
+thetaStat print angsd_kok_batch1_okanagan_folded_shore_varonly.thetas.idx > angsd_kok_batch1_okanagan_folded_shore_varonly.thetas
+
+thetaStat print angsd_kok_batch1_okanagan_folded_stream_varonly.thetas.idx > angsd_kok_batch1_okanagan_folded_stream_varonly.thetas
+
+thetaStat print angsd_kok_batch1_okanagan_folded_sockeye_varonly.thetas.idx > angsd_kok_batch1_okanagan_folded_sockeye_varonly.thetas
+
+
+tail -n +2 angsd_kok_batch1_okanagan_folded_shore_varonly.thetas > angsd_kok_batch1_okanagan_folded_shore_varonly.thetas_nohead
+
+tail -n +2 angsd_kok_batch1_okanagan_folded_stream_varonly.thetas > angsd_kok_batch1_okanagan_folded_stream_varonly.thetas_nohead
+
+tail -n +2 angsd_kok_batch1_okanagan_folded_sockeye_varonly.thetas > angsd_kok_batch1_okanagan_folded_sockeye_varonly.thetas_nohead
+
+awk '{print exp($4)}' angsd_kok_batch1_okanagan_folded_shore_varonly.thetas_nohead | paste angsd_kok_batch1_okanagan_folded_shore_varonly.thetas_nohead - > angsd_kok_batch1_okanagan_folded_shore_varonly.thetas_nohead_pi
+
+awk '{print exp($4)}' angsd_kok_batch1_okanagan_folded_stream_varonly.thetas_nohead | paste angsd_kok_batch1_okanagan_folded_stream_varonly.thetas_nohead - > angsd_kok_batch1_okanagan_folded_stream_varonly.thetas_nohead_pi
+
+awk '{print exp($4)}' angsd_kok_batch1_okanagan_folded_sockeye_varonly.thetas_nohead | paste angsd_kok_batch1_okanagan_folded_sockeye_varonly.thetas_nohead - > angsd_kok_batch1_okanagan_folded_sockeye_varonly.thetas_nohead_pi
+
+
+
+### total pi for each ecotype
+awk '{sum+=$8;} END{print sum/1376458117;}' angsd_kok_batch1_okanagan_folded_shore_varonly.thetas_nohead_pi ### 0.00136353
+
+awk '{sum+=$8;} END{print sum/1376458117;}' angsd_kok_batch1_okanagan_folded_stream_varonly.thetas_nohead_pi ### 0.00139777
+
+awk '{sum+=$8;} END{print sum/1376458117;}' angsd_kok_batch1_okanagan_folded_sockeye_varonly.thetas_nohead_pi ### 0.00134626
+
+### pi for each AOD in each ecotype
+grep "NC_042541.1" angsd_kok_batch1_okanagan_all.mafs | awk '$2 >13212242 && $2 < 13319291' > all_variants_aod7.mafs ###103003
+grep "NC_042546.1" angsd_kok_batch1_okanagan_all.mafs | awk '$2 >41162737 && $2 < 41366047' > all_variants_aod12.mafs ### 200134
+grep "NC_042554.1" angsd_kok_batch1_okanagan_all.mafs | awk '$2 >45396219 && $2 < 45557636' > all_variants_aod20.mafs ### 159112
+
+grep "NC_042541.1" angsd_kok_batch1_okanagan_folded_shore_varonly.thetas_nohead_pi | awk '$2 >13212242 && $2 < 13319291' | awk '{sum+=$8;} END{print sum/103002;}' ### 0.00105195
+grep "NC_042541.1" angsd_kok_batch1_okanagan_folded_stream_varonly.thetas_nohead_pi | awk '$2 >13212242 && $2 < 13319291' | awk '{sum+=$8;} END{print sum/103002;}' ### 0.00177706
+grep "NC_042541.1" angsd_kok_batch1_okanagan_folded_sockeye_varonly.thetas_nohead_pi | awk '$2 >13212242 && $2 < 13319291' | awk '{sum+=$8;} END{print sum/103002;}' ### 0.00219509
+
+
+grep "NC_042546.1" angsd_kok_batch1_okanagan_folded_shore_varonly.thetas_nohead_pi | awk '$2 >41162737 && $2 < 41366047' | awk '{sum+=$8;} END{print sum/200134;}' ### 0.000870337
+grep "NC_042546.1" angsd_kok_batch1_okanagan_folded_stream_varonly.thetas_nohead_pi | awk '$2 >41162737 && $2 < 41366047' | awk '{sum+=$8;} END{print sum/200134;}' ### 0.00175952
+grep "NC_042546.1" angsd_kok_batch1_okanagan_folded_sockeye_varonly.thetas_nohead_pi | awk '$2 >41162737 && $2 < 41366047' | awk '{sum+=$8;} END{print sum/200134;}' ### 0.000780143
+
+grep "NC_042554.1" angsd_kok_batch1_okanagan_folded_shore_varonly.thetas_nohead_pi | awk '$2 >45396219 && $2 < 45557636' | awk '{sum+=$8;} END{print sum/159112;}' ### 0.000266932
+grep "NC_042554.1" angsd_kok_batch1_okanagan_folded_stream_varonly.thetas_nohead_pi | awk '$2 >45396219 && $2 < 45557636' | awk '{sum+=$8;} END{print sum/159112;}' ### 0.000500584
+grep "NC_042554.1" angsd_kok_batch1_okanagan_folded_sockeye_varonly.thetas_nohead_pi | awk '$2 >45396219 && $2 < 45557636' | awk '{sum+=$8;} END{print sum/159112;}' ### 0.000675266

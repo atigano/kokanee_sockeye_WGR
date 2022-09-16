@@ -1,0 +1,27 @@
+###split vcf file by SV type
+grep "#" delly_okanagan_sv_filtered.vcf > delly_okanagan_sv_filtered_ins.vcf && grep "SVTYPE=INS" delly_okanagan_sv_filtered.vcf >> delly_okanagan_sv_filtered_ins.vcf
+grep "#" delly_okanagan_sv_filtered.vcf > delly_okanagan_sv_filtered_del.vcf && grep "SVTYPE=DEL" delly_okanagan_sv_filtered.vcf >> delly_okanagan_sv_filtered_del.vcf
+grep "#" delly_okanagan_sv_filtered.vcf > delly_okanagan_sv_filtered_inv.vcf && grep "SVTYPE=INV" delly_okanagan_sv_filtered.vcf >> delly_okanagan_sv_filtered_inv.vcf
+grep "#" delly_okanagan_sv_filtered.vcf > delly_okanagan_sv_filtered_dup.vcf && grep "SVTYPE=DUP" delly_okanagan_sv_filtered.vcf >> delly_okanagan_sv_filtered_dup.vcf
+grep "#" delly_okanagan_sv_filtered.vcf > delly_okanagan_sv_filtered_bnd.vcf && grep "SVTYPE=BND" delly_okanagan_sv_filtered.vcf >> delly_okanagan_sv_filtered_bnd.vcf
+
+
+### Recode genotypes for PCA
+module load vcftools
+vcftools --vcf delly_okanagan_sv_filtered.vcf --012 --out delly_okanagan_sv_filtered
+
+###and for each SV type
+vcftools --vcf delly_okanagan_sv_filtered_ins.vcf --012 --out delly_okanagan_sv_filtered_ins
+vcftools --vcf delly_okanagan_sv_filtered_del.vcf --012 --out delly_okanagan_sv_filtered_del
+vcftools --vcf delly_okanagan_sv_filtered_inv.vcf --012 --out delly_okanagan_sv_filtered_inv
+vcftools --vcf delly_okanagan_sv_filtered_dup.vcf --012 --out delly_okanagan_sv_filtered_dup
+vcftools --vcf delly_okanagan_sv_filtered_bnd.vcf --012 --out delly_okanagan_sv_filtered_bnd
+
+#Get allele frequencies from SV delly
+vcftools --vcf delly_okanagan_sv_filtered.vcf --keep samples_stream_okanagan.txt --freq --out stream_af_sv 
+vcftools --vcf delly_okanagan_sv_filtered.vcf --keep samples_shore_okanagan.txt --freq --out shore_af_sv 
+vcftools --vcf delly_okanagan_sv_filtered.vcf --keep samples_sockeye_okanagan.txt --freq --out sockeye_af_sv 
+
+cut -f 5 sockeye_af_sv.frq | sed 's/:/\t/g' | cut -f2 | less > sockeye_major_af
+cut -f 5 shore_af_sv.frq | sed 's/:/\t/g' | cut -f2 | less > shore_major_af
+cut -f 5 stream_af_sv.frq | sed 's/:/\t/g' | cut -f2 | less > stream_major_af
